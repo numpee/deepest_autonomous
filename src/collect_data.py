@@ -24,7 +24,7 @@ def callback_img(image):
 
 def callback_steer(steer):
     global steer_val
-    steer_val = steer
+    steer_val = steer.data
 
 def shutdown():
     dataframe = pd.DataFrame({'image_paths': image_paths, 'steer_values': steer_values})
