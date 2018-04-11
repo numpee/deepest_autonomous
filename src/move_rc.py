@@ -10,9 +10,8 @@ msg = """
 Control Your Robot!
 ---------------------------
 Controlling the robot:
-    w
-a   s   d
-    x
+
+a       d
 
 w: go forward
 a, d: turn left/right
@@ -21,11 +20,8 @@ CTRL-C to quit
 """
 
 moveBindings = {
-        'w':(1),
-        'a':(2),
-        's':(3),
-        'd':(4),
-        'x':(5),
+        'a':(-5),
+        'd':(5),
         }
 
 def getKey():
@@ -40,6 +36,7 @@ def getKey():
     return key
 
 speed = 1
+
 
 def vels(direction):
     if direction=='w':
@@ -59,30 +56,27 @@ def vels(direction):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
     
-    rospy.init_node('moya_teleop')
+    rospy.init_node('deepest_teleop')
     pub = rospy.Publisher('/cmd_vel', Int16, queue_size=5)
 
-    robot_direction=3
+    steer = 90
     try:
         print msg
-        print vels(speed)
         while(1):
             key = getKey()
             if key in moveBindings.keys():
-                robot_direction = moveBindings[key]
-                print(vels(key))
-            elif key == ' ' or key == 'k' :
-                robot_direction = 3
+                steer += moveBindings[key]
+                print(steer)
             else:
                 if (key == '\x03'):
                     break
 
-            pub.publish(robot_direction)
+            pub.publish(steer)
 
     except Exception as e:
         print e
 
     finally:
-        pub.publish(robot_direction)
+        pub.publish(steer)
 
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
