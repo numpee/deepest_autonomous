@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# ROS code for sending image from RASPI Cam
+
 
 import rospy
 import cv2
