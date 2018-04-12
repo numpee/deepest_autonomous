@@ -35,7 +35,7 @@ def main():
     
     rospy.init_node('data_collect_node')
     image_sub = rospy.Subscriber('center_cam', Image, callback_img, queue_size=1, buff_size = 2**24)
-    steer_sub = rospy.Subscriber('steer_return', Int16, callback_steer, queue_size = 1)
+    steer_sub = rospy.Subscriber('/cmd_vel', Int16, callback_steer, queue_size = 1)
     rospy.spin()
     rospy.on_shutdown(shutdown)
 
