@@ -4,8 +4,10 @@ import rospy
 import cv2
 import numpy as np
 from std_msgs.msg import Int16
-import time
 
+#added
+import time
+from models import *
 
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 300)
