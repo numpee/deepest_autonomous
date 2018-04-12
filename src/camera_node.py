@@ -13,6 +13,8 @@ import time
 
 rospy.loginfo('Init camera')
 cam = cv2.VideoCapture(0)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
+#cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
 
 def main():
     image_pub = rospy.Publisher('center_cam', Image, queue_size = 1)

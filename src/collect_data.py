@@ -18,6 +18,7 @@ steer_values = []
 def callback_img(image):
     img = bridge.imgmsg_to_cv2(image, "bgr8")
     file_path = str(time.time()) + '.jpg'
+    img = cv2.resize(img, (200,66), cv2.INTER_AREA)
     cv2.imwrite(('../images/'+file_path), img)
     image_paths.append(file_path)
     steer_values.append(steer_val)
@@ -28,7 +29,7 @@ def callback_steer(steer):
 
 def shutdown():
     dataframe = pd.DataFrame({'image_paths': image_paths, 'steer_values': steer_values})
-    dataframe.to_csv('../images/image_and_steer.csv')
+    dataframe.to_csv('../images/image_and_steer' + str(time.time())+'.csv')
     print('Saved Data!')
 
 def main():
