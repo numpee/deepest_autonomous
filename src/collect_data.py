@@ -7,7 +7,6 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Int16
 from cv_bridge import CvBridge, CvBridgeError
 import pandas as pd
-import message_filters
 import time 
 
 steer_val = 90
