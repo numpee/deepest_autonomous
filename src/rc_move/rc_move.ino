@@ -1,17 +1,20 @@
 /* Include necessary libraries for ROS and servo */
-#include <Servo.h>
+
 #include <ros.h>
 #include <std_msgs/Int16.h>
-
+#include <Servo.h>
 
 /* initialize default values */
-int steer = 90;
+
 Servo myservo;
 ros::NodeHandle nh;
+
+int steer;
 
 /* callback function used when message is receieved*/
 void messageCb( const std_msgs::Int16& cmd_vel) {
   steer = cmd_vel.data;   //set global variable to received value
+  myservo.write(steer);
 }
 
 std_msgs::Int16 pub_steer;
@@ -25,16 +28,19 @@ void setup() {
   nh.initNode(); 
   nh.subscribe(sub); 
   nh.advertise(pub); 
-  myservo.write(90); 
+  steer = 110;
+  myservo.write(steer); 
 } 
 
 void loop() { 
+  /* ROS spinonce */
+  nh.spinOnce();
   /* step motor control */
-  myservo.write(steer);
+  //myservo.write(steer);
   pub_steer.data = steer;
   pub.publish(&pub_steer);
 
-  /* ROS spinonce */
-  nh.spinOnce();
+
+  delay(100);
 }
 
