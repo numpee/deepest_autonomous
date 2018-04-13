@@ -37,12 +37,12 @@ def main():
     # declare models
     tf.reset_default_graph()    
 
-    teacher = Teacher() #or Teacher_depthwise
-    model = Student(teacher, width = 0.5)   
+    model = Teacher() #or Teacher_depthwise
+    #model = Student(teacher, width = 0.5)   
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
         saver = tf.train.Saver()
-        saver.restore(sess, "../Model_checkpoints/student") #change here to teacher, teacher_depthwise, student, student_pruned
+        saver.restore(sess, "../Model_checkpoints/teacher") #change here to teacher, teacher_depthwise, student, student_pruned
     
         while not rospy.is_shutdown():
             _, img = cam.read()
