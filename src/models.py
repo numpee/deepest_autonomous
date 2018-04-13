@@ -214,20 +214,20 @@ class Student(object):
         W_fc0 = tf.get_variable('Student/W_fc0', shape=[int(14400 * width), 1164],
                                 initializer=initializer)
         b_fc0 = tf.get_variable('Student/b_fc0', shape=[1164], initializer=initializer)
-        tmp = tf.nn.relu(tf.matmul(tmp, tf.contrib.model_pruning.apply_mask(W_fc0)) + b_fc0)
+        tmp = tf.nn.relu(tf.matmul(tmp, W_fc0) + b_fc0)
         self.hint = tmp
 
         W_fc1 = tf.get_variable('Student/W_fc1', shape=[1164, 100], initializer=initializer)
         b_fc1 = tf.get_variable('Student/b_fc1', shape=[100], initializer=initializer)
-        tmp = tf.nn.relu(tf.matmul(tmp, tf.contrib.model_pruning.apply_mask(W_fc1, scope='fc1')) + b_fc1)
+        tmp = tf.nn.relu(tf.matmul(tmp, W_fc1) + b_fc1)
 
         W_fc2 = tf.get_variable('Student/W_fc2', shape=[100, 50], initializer=initializer)
         b_fc2 = tf.get_variable('Student/b_fc2', shape=[50], initializer=initializer)
-        tmp = tf.nn.relu(tf.matmul(tmp, tf.contrib.model_pruning.apply_mask(W_fc2, scope='fc2')) + b_fc2)
+        tmp = tf.nn.relu(tf.matmul(tmp, W_fc2) + b_fc2)
 
         W_fc3 = tf.get_variable('Student/W_fc3', shape=[50, 10], initializer=initializer)
         b_fc3 = tf.get_variable('Student/b_fc3', shape=[10], initializer=initializer)
-        tmp = tf.nn.relu(tf.matmul(tmp, tf.contrib.model_pruning.apply_mask(W_fc3, scope='fc3')) + b_fc3)
+        tmp = tf.nn.relu(tf.matmul(tmp, W_fc3) + b_fc3)
 
         W_fc4 = tf.get_variable('Student/W_fc4', shape=[10, 1], initializer=initializer)
         b_fc4 = tf.get_variable('Student/b_fc4', shape=[1], initializer=initializer)
