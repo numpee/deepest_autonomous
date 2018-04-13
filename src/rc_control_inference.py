@@ -38,7 +38,7 @@ def main():
     tf.reset_default_graph()    
 
     teacher = Teacher() #or Teacher_depthwise
-    student = Student(teacher, width = 0.5)   
+    model = Student(teacher, width = 0.5)   
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
         saver = tf.train.Saver()
@@ -46,7 +46,7 @@ def main():
     
         while not rospy.is_shutdown():
             _, img = cam.read()
-            img = cv2.resize(img, (66,200), cv2.INTER_AREA)
+            img = cv2.resize(img, (200,66), cv2.INTER_AREA)
 
             #TENSORFLOW INFERENCE CODE HERE
             steer, inference_time = predict(sess, model, img)
@@ -63,7 +63,7 @@ def predict(sess, model, image):
     steering = sess.run([model.steering], feed_dict = feed_dict)
     steering = steering[0][0][0]
     inference_time = time.time() - start_time
-    #print("steering: ", steering, ", inference_time: ", time.time()-start_time)
+    print("steering: ", steering, ", inference_time: ", time.time()-start_time)
     return steering, inference_time
     
 if __name__ == '__main__':

@@ -10,5 +10,5 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
 
     saver = tf.train.Saver()
-    save_path = saver.save(sess, "../models/student")
+    save_path = saver.save(sess, "../Model_checkpoints/student")
     print("model saved in path: %s" % save_path)
